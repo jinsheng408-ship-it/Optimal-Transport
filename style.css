@@ -1,0 +1,428 @@
+/* ============================================================
+   Computational Optimal Transport – Stylesheet
+   Aesthetic: refined academic / research paper, dark navy + amber
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ── CSS Variables ── */
+:root {
+    --navy:       #0b1829;
+    --navy-mid:   #112240;
+    --navy-light: #1a3155;
+    --amber:      #e8a020;
+    --amber-dim:  #c4831a;
+    --cream:      #f5f0e8;
+    --text:       #dce6f0;
+    --text-muted: #8fa9c4;
+    --border:     #1e3a5f;
+    --code-bg:    #0d1e30;
+    --shadow:     0 4px 24px rgba(0,0,0,0.45);
+}
+
+/* ── Reset & Base ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 400;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    background-color: var(--navy);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* ── Navigation ── */
+nav {
+    background-color: var(--navy-mid);
+    border-bottom: 2px solid var(--amber);
+    padding: 0 2rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow);
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+}
+
+nav li {
+    position: relative;
+}
+
+nav a {
+    display: block;
+    padding: 1rem 1.25rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    transition: color 0.2s, background 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--amber);
+    background-color: rgba(232, 160, 32, 0.08);
+}
+
+nav a::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: var(--amber);
+    transform: scaleX(0);
+    transition: transform 0.2s;
+    margin-top: -2px;
+}
+
+nav a:hover::after { transform: scaleX(1); }
+
+/* ── Main Content ── */
+main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 3rem 2rem 4rem;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Typography ── */
+h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: -0.01em;
+    margin: 0 0 1.5rem;
+    line-height: 1.2;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+}
+
+h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--cream);
+    margin: 2.5rem 0 0.75rem;
+    letter-spacing: -0.01em;
+}
+
+h3 {
+    font-family: 'Source Serif 4', serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 1.5rem 0 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.85rem;
+}
+
+p { margin: 0 0 1.2rem; color: var(--text); }
+
+em { color: var(--amber); font-style: italic; }
+
+strong { color: var(--cream); font-weight: 600; }
+
+a { color: var(--amber); transition: opacity 0.2s; }
+a:hover { opacity: 0.75; }
+
+/* ── Sections ── */
+section {
+    margin-bottom: 2.5rem;
+    padding: 1.75rem 2rem;
+    background: var(--navy-mid);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0;
+    box-shadow: var(--shadow);
+}
+
+section:first-of-type { margin-top: 2rem; }
+
+/* ── Lists ── */
+ul {
+    padding-left: 1.5rem;
+    margin: 0.5rem 0 1rem;
+}
+
+ul li {
+    margin-bottom: 0.6rem;
+    color: var(--text);
+}
+
+ul li::marker { color: var(--amber); }
+
+/* ── Math display ── */
+mjx-container {
+    color: var(--cream) !important;
+    overflow-x: auto;
+}
+
+/* ── Controls (Sinkhorn page) ── */
+label {
+    display: inline-block;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+    margin-bottom: 0.25rem;
+}
+
+select {
+    display: block;
+    margin-top: 0.4rem;
+    padding: 0.55rem 1rem;
+    background: var(--navy-light);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238fa9c4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.85rem center;
+    padding-right: 2.2rem;
+    min-width: 240px;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--amber);
+}
+
+/* ── Parameters panel ── */
+#params {
+    margin-top: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+#params label {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+#params input[type="number"] {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    background: var(--navy-mid);
+    color: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+}
+
+#params input[type="number"]:focus {
+    outline: none;
+    border-color: var(--amber);
+}
+
+/* ── Epsilon slider ── */
+.slider-container {
+    margin-top: 1.75rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.slider-container label {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    min-width: 180px;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 220px;
+    height: 5px;
+    background: var(--navy-light);
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--amber);
+    cursor: pointer;
+    transition: transform 0.15s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+#epsilon-value {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--amber);
+    min-width: 48px;
+    text-align: right;
+}
+
+/* ── Charts ── */
+.chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+}
+
+.plot {
+    flex: 1 1 300px;
+    min-width: 280px;
+    height: 300px;
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.heatmap {
+    width: 100%;
+    height: 420px;
+    margin-top: 1.25rem;
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* ── Cost & explanation ── */
+#costValue {
+    margin-top: 1rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--navy-light);
+    border-radius: 6px;
+    display: inline-block;
+    font-size: 1rem;
+}
+
+#costValue strong { color: var(--text-muted); font-weight: 400; }
+#cost-number {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--amber);
+    font-size: 1.1rem;
+    margin-left: 0.4rem;
+}
+
+#epsilonExplanation {
+    margin-top: 0.75rem;
+    padding: 0.85rem 1.25rem;
+    background: rgba(232, 160, 32, 0.07);
+    border-left: 3px solid var(--amber);
+    border-radius: 0 4px 4px 0;
+    font-size: 0.92rem;
+    color: var(--text-muted);
+    font-style: italic;
+    min-height: 1.2rem;
+}
+
+/* ── Footer ── */
+footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: var(--navy-mid);
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+}
+
+/* ── Home page hero ── */
+.hero-intro {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.hero-intro p:last-child { margin-bottom: 0; }
+
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.nav-card {
+    display: block;
+    padding: 1.5rem;
+    background: var(--navy-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.nav-card:hover {
+    border-color: var(--amber);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+    color: var(--text);
+    opacity: 1;
+}
+
+.nav-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--amber);
+    margin-bottom: 0.4rem;
+}
+
+.nav-card-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+    main { padding: 2rem 1.25rem 3rem; }
+    h1   { font-size: 1.8rem; }
+    nav  { padding: 0 1rem; }
+    nav a { padding: 0.85rem 0.85rem; font-size: 0.82rem; }
+    #params { grid-template-columns: 1fr 1fr; }
+    .plot { height: 240px; }
+    .heatmap { height: 320px; }
+}

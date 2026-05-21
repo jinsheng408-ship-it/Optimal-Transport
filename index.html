@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computational Optimal Transport</title>
+    <meta name="description" content="Interactive visualisation of entropic optimal transport and the Sinkhorn algorithm.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="theory.html">Theory</a></li>
+            <li><a href="couplings.html">Couplings</a></li>
+            <li><a href="sinkhorn.html">Sinkhorn Visualisation</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Computational Optimal Transport &amp; Sinkhorn Algorithm</h1>
+
+        <div class="hero-intro">
+            <p>
+                Optimal transport studies how to transform one probability distribution into another
+                in a way that minimises a transportation cost. In its discrete form, this involves
+                finding a <em>coupling matrix</em> \(P\) that moves mass from the source distribution
+                \(a\) to the target distribution \(b\) at minimal cost. The classical
+                Kantorovich formulation solves a linear programme over the admissible set
+                \[U(a,b) = \bigl\{P \ge 0 : P\mathbf{1} = a,\; P^{\!\top}\mathbf{1} = b\bigr\}.\]
+            </p>
+            <p>
+                <strong>Entropic regularisation</strong> adds a Shannon entropy penalty \(-\varepsilon H(P)\),
+                smoothing the solution and dramatically speeding up computation. The objective becomes
+                \[\min_{P\in U(a,b)} \langle C,P\rangle - \varepsilon H(P).\]
+                Strong convexity of the KL divergence guarantees a unique minimiser for every
+                \(\varepsilon > 0\), and the plan becomes more diffuse as \(\varepsilon\) grows.
+            </p>
+            <p>
+                The <strong>Sinkhorn algorithm</strong> solves this problem efficiently by alternately
+                normalising rows and columns of the kernel matrix \(K = e^{-C/\varepsilon}\), producing
+                scaling vectors \(u\) and \(v\) such that \(P = \operatorname{diag}(u)\,K\,\operatorname{diag}(v)\)
+                satisfies the marginal constraints.
+            </p>
+        </div>
+
+        <h2>Explore the Project</h2>
+        <div class="nav-grid">
+            <a href="theory.html" class="nav-card">
+                <div class="nav-card-title">Theory</div>
+                <div class="nav-card-desc">Mathematical foundations: Kantorovich OT, entropic regularisation, and the Sinkhorn updates.</div>
+            </a>
+            <a href="couplings.html" class="nav-card">
+                <div class="nav-card-title">Couplings</div>
+                <div class="nav-card-desc">An overview of the six distribution pairs used in the visualisation, from Gaussian to restaurant revenue.</div>
+            </a>
+            <a href="sinkhorn.html" class="nav-card">
+                <div class="nav-card-title">Sinkhorn Visualisation</div>
+                <div class="nav-card-desc">Interactive tool — pick distributions, tune \(\varepsilon\), and watch the transport plan heatmap update live.</div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <p>Final Year Project – Computational Optimal Transport (2026)</p>
+    </footer>
+</body>
+</html>

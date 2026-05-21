@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theory – Computational Optimal Transport</title>
+    <meta name="description" content="Mathematical background: Kantorovich OT, entropic regularisation, and the Sinkhorn algorithm.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="theory.html" class="active">Theory</a></li>
+            <li><a href="couplings.html">Couplings</a></li>
+            <li><a href="sinkhorn.html">Sinkhorn Visualisation</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Theoretical Background</h1>
+
+        <section>
+            <h2>Couplings and Kantorovich Optimal Transport</h2>
+            <p>
+                Given two discrete probability distributions \(a \in \mathbb{R}^n\) and
+                \(b \in \mathbb{R}^m\) (non-negative vectors summing to one), a
+                <em>coupling</em> \(P\) is a non-negative \(n \times m\) matrix whose
+                row and column marginals match \(a\) and \(b\):
+                \[U(a,b) = \bigl\{P\ge 0 : P\mathbf{1}_m = a,\; P^{\!\top}\mathbf{1}_n = b\bigr\}.\]
+            </p>
+            <p>
+                A cost matrix \(C \in \mathbb{R}^{n\times m}\) encodes the cost of moving
+                one unit of mass from position \(x_i\) to position \(y_j\); a typical
+                choice is \(C_{ij} = |x_i - y_j|^p\). The <strong>Kantorovich problem</strong>
+                finds the coupling of least total cost:
+                \[\min_{P\in U(a,b)} \langle C, P \rangle = \sum_{i,j} C_{ij}\,P_{ij}.\]
+                This is a linear programme and can be solved exactly, but its cost scales
+                super-cubically with the support size, motivating faster approximations.
+            </p>
+        </section>
+
+        <section>
+            <h2>Entropic Regularisation</h2>
+            <p>
+                Adding a Shannon entropy term \(H(P) = -\sum_{i,j} P_{ij}(\log P_{ij} - 1)\)
+                yields the <em>entropically regularised</em> problem:
+                \[\min_{P\in U(a,b)} \langle C, P \rangle - \varepsilon\, H(P).\]
+                Equivalently, this minimises the KL divergence
+                \(\varepsilon\,\mathrm{KL}(P\,\|\,e^{-C/\varepsilon})\) subject to the marginal constraints.
+                Entropic regularisation brings several advantages:
+            </p>
+            <ul>
+                <li>
+                    <strong>Unique solution.</strong> The KL divergence is strictly convex, so
+                    the regularised problem has exactly one minimiser.
+                </li>
+                <li>
+                    <strong>Smoother coupling.</strong> More entries of \(P\) are non-zero,
+                    producing a diffuse plan rather than a sparse one.
+                </li>
+                <li>
+                    <strong>Interpolation.</strong> As \(\varepsilon \to 0\) the solution
+                    converges to an unregularised OT plan; as \(\varepsilon \to \infty\) it
+                    tends to the independent product \(a \otimes b\).
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Sinkhorn Algorithm</h2>
+            <p>
+                The first-order optimality conditions of the regularised problem show that
+                any solution takes the form
+                \[P^* = \operatorname{diag}(u)\;K\;\operatorname{diag}(v),\]
+                where \(K = e^{-C/\varepsilon}\) is the <em>Gibbs kernel</em> and
+                \(u \in \mathbb{R}^n\), \(v \in \mathbb{R}^m\) are positive scaling vectors.
+                The <strong>Sinkhorn algorithm</strong> finds these vectors by alternating:
+                \[u \leftarrow \frac{a}{Kv}, \qquad v \leftarrow \frac{b}{K^{\!\top}u},\]
+                where division is elementwise. Because \(K\) is strictly positive, these
+                updates converge linearly to the unique solution.
+            </p>
+            <p>
+                In practice the iteration stops when the change in \(v\) drops below a
+                tolerance (here \(10^{-7}\)), or after a maximum number of iterations. The
+                transport cost \(\langle C, P\rangle\) is then evaluated directly from the
+                recovered plan.
+            </p>
+        </section>
+
+        <section>
+            <h2>Role of the Regularisation Parameter \(\varepsilon\)</h2>
+            <p>
+                The parameter \(\varepsilon > 0\) controls the trade-off between cost
+                fidelity and smoothness:
+            </p>
+            <ul>
+                <li>
+                    <strong>Large \(\varepsilon\):</strong> the coupling spreads mass broadly,
+                    approaching the independent product \(a \otimes b\). The heatmap appears
+                    uniform, and the transport cost may deviate from the true OT cost.
+                </li>
+                <li>
+                    <strong>Small \(\varepsilon\):</strong> the coupling sharpens and concentrates
+                    mass along cost-optimal paths, recovering the unregularised plan. However,
+                    numerical underflow in \(K\) can cause instability.
+                </li>
+                <li>
+                    <strong>Moderate \(\varepsilon\):</strong> balances stability with meaningful
+                    structure in the transport plan.
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>Final Year Project – Computational Optimal Transport (2026)</p>
+    </footer>
+</body>
+</html>

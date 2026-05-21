@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupling Examples – Computational Optimal Transport</title>
+    <meta name="description" content="Overview of the six distribution pairs used in the Sinkhorn visualisation.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="theory.html">Theory</a></li>
+            <li><a href="couplings.html" class="active">Couplings</a></li>
+            <li><a href="sinkhorn.html">Sinkhorn Visualisation</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Coupling Examples</h1>
+        <p>
+            Below are the six distribution pairs available in the
+            <a href="sinkhorn.html">interactive visualisation</a>.
+            Each pair illustrates a different aspect of discrete optimal transport.
+            The restaurant revenue model serves as an applied illustration; the
+            core focus of the project remains the general theory and algorithm.
+        </p>
+
+        <section>
+            <h2>Gaussian vs Gaussian</h2>
+            <p>
+                Two normal distributions parameterised by their means
+                \(\mu_a, \mu_b\) and standard deviations \(\sigma_a, \sigma_b\).
+                Both are discretised on a shared grid spanning \(\pm 4\) standard
+                deviations. This example shows transport between continuous, symmetric
+                distributions and is a good starting point for exploring the effect of
+                \(\varepsilon\).
+            </p>
+        </section>
+
+        <section>
+            <h2>Gaussian vs Poisson</h2>
+            <p>
+                A Gaussian (mean \(\mu_a\), std \(\sigma_a\)) evaluated on integer
+                support, paired with a Poisson distribution of rate \(\lambda_b\).
+                This combination mixes a continuous density with a discrete mass
+                function on the same integer grid, illustrating transport across
+                different distributional types.
+            </p>
+        </section>
+
+        <section>
+            <h2>Poisson vs Poisson</h2>
+            <p>
+                Two Poisson distributions with rates \(\lambda_a\) and \(\lambda_b\)
+                on a shared integer grid that covers up to \(\lambda + 6\sqrt{\lambda}\).
+                Adjusting the rates shifts the bulk of the mass and changes the
+                effective support size, affecting the cost matrix and the coupling.
+            </p>
+        </section>
+
+        <section>
+            <h2>Exponential vs Exponential</h2>
+            <p>
+                Two exponential distributions with rate parameters \(\lambda_a\) and
+                \(\lambda_b\), both supported on \([0, \infty)\) and discretised on a
+                shared positive grid. These distributions decay monotonically, so the
+                coupling typically concentrates near the lower end of the support.
+            </p>
+        </section>
+
+        <section>
+            <h2>Random Sum Distribution</h2>
+            <p>
+                A mixture of a Gaussian and an exponential component, producing a
+                shape that is right-skewed with a Gaussian peak. The mixing weight
+                \(w \in [0,1]\) controls the balance between the two components.
+                This example demonstrates transport involving a multimodal or
+                asymmetric source distribution.
+            </p>
+        </section>
+
+        <section>
+            <h2>Restaurant Revenue Model</h2>
+            <p>
+                A toy applied example: daily customer arrivals (and hence revenue
+                units) are modelled as Poisson with mean \(\lambda_a\) under a
+                baseline pricing strategy. After a pricing or promotional change the
+                demand shifts to \(\lambda_b\). The optimal transport plan reveals
+                how mass is redistributed across revenue levels, providing an
+                intuitive reading of the Wasserstein distance between the two regimes.
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>Final Year Project – Computational Optimal Transport (2026)</p>
+    </footer>
+</body>
+</html>

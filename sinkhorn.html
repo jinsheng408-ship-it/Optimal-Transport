@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sinkhorn Visualisation – Computational Optimal Transport</title>
+    <meta name="description" content="Interactive visualisation of entropic optimal transport plans via the Sinkhorn algorithm.">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" defer></script>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="theory.html">Theory</a></li>
+            <li><a href="couplings.html">Couplings</a></li>
+            <li><a href="sinkhorn.html" class="active">Sinkhorn Visualisation</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Interactive Sinkhorn Transport Plans</h1>
+        <p>
+            Select a distribution pair, adjust its parameters, and tune the
+            regularisation parameter \(\varepsilon\). The bar charts show the source
+            and target distributions; the heatmap displays the coupling matrix \(P\);
+            and the transport cost \(\langle C, P\rangle\) is reported below.
+        </p>
+
+        <div style="margin-top:1.5rem;">
+            <label for="example-select">Distribution pair</label>
+            <select id="example-select">
+                <option value="gaussian-gaussian">Gaussian vs Gaussian</option>
+                <option value="gaussian-poisson">Gaussian vs Poisson</option>
+                <option value="poisson-poisson">Poisson vs Poisson</option>
+                <option value="exponential-exponential">Exponential vs Exponential</option>
+                <option value="random-sum">Random sum distribution</option>
+                <option value="restaurant">Restaurant revenue model</option>
+            </select>
+        </div>
+
+        <!-- Parameters filled dynamically -->
+        <div id="params"></div>
+
+        <!-- Epsilon slider -->
+        <div class="slider-container">
+            <label for="epsilon-slider">Regularisation \(\varepsilon\)</label>
+            <input type="range" id="epsilon-slider" min="0.01" max="5" step="0.01" value="1">
+            <span id="epsilon-value">1.00</span>
+        </div>
+
+        <!-- Distribution charts -->
+        <div class="chart-container">
+            <div id="sourcePlot" class="plot"></div>
+            <div id="targetPlot" class="plot"></div>
+        </div>
+
+        <!-- Transport plan heatmap -->
+        <div id="heatmapPlot" class="heatmap"></div>
+
+        <!-- Results -->
+        <p id="costValue"><strong>Transport cost &nbsp;\(\langle C,P\rangle\)</strong> <span id="cost-number">–</span></p>
+        <p id="epsilonExplanation"></p>
+    </main>
+
+    <footer>
+        <p>Final Year Project – Computational Optimal Transport (2026)</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
